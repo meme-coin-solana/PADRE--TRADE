@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit Funds - Padre Trade AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #0A0A0A;
+            --primary-blue: #1B1B1B;
+            --accent-blue: #FF6600;
+            --accent-light: #D95500;
+            --text-light: #FFFFFF;
+            --text-gray: #BDBDBD;
+            --gradient-bg: linear-gradient(135deg, #0A0A0A 0%, #1B1B1B 100%);
+            --card-bg: rgba(27, 27, 27, 0.7);
+        }
+
+        body {
+            background: var(--gradient-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 102, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .logo i {
+            color: var(--accent-blue);
+        }
+
+        .back-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 102, 0, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .bonus-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6600, #D95500);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+        }
+
+        /* Deposit Section */
+        .deposit-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 102, 0, 0.2);
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.8s ease;
+        }
+
+        .deposit-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wallet-address {
+            background: rgba(10, 10, 10, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 102, 0, 0.3);
+        }
+
+        .wallet-address p {
+            margin-bottom: 10px;
+            color: var(--text-gray);
+        }
+
+        .address-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(27, 27, 27, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px dashed var(--accent-blue);
+        }
+
+        .address {
+            font-family: monospace;
+            font-size: 1.1rem;
+            word-break: break-all;
+            color: var(--text-light);
+        }
+
+        .copy-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-light);
+        }
+
+        /* Steps Section */
+        .steps-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 102, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .step-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Support Section */
+        .support-section {
+            text-align: center;
+            padding: 40px 0;
+            background: var(--card-bg);
+            border-radius: 15px;
+            margin: 50px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 102, 0, 0.2);
+        }
+
+        .support-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+        }
+
+        .support-section p {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .telegram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent-blue);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .telegram-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 102, 0, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 102, 0, 0.3);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 102, 0, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .floating-1 {
+            top: 10%;
+            left: 5%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .floating-2 {
+            bottom: 20%;
+            right: 5%;
+            animation: float 18s infinite ease-in-out;
+        }
+
+        .floating-3 {
+            top: 40%;
+            right: 10%;
+            animation: float 12s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .steps-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .address-box {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <span>Padre Trade AI</span>
+            </div>
+            <a href="https://padre-trade-ai.vercel.app/" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Main Site
+            </a>
+        </header>
+
+        <section class="hero">
+            <h1>Deposit & Get 50% Bonus</h1>
+            <div class="bonus-badge">
+                <i class="fas fa-gift"></i> 50% BONUS ON DEPOSIT
+            </div>
+            <p>To access all services of Padre Trade AI, you need to make a deposit first. After your deposit is confirmed, your account will be created automatically.</p>
+        </section>
+
+        <section class="deposit-section">
+            <h2><i class="fas fa-wallet"></i> Send Your Deposit</h2>
+            <p>When you make a deposit, you will receive a 50% bonus on your total deposit amount that you can use directly while trading.</p>
+            
+            <div class="wallet-address">
+                <p>Send your deposit to the following wallet address:</p>
+                <div class="address-box">
+                    <div class="address">9PHnuwWcfBx9bCWvad78jRjK5oRyTxDBGB6USvVESXor</div>
+                    <button class="copy-btn" id="copyAddress">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+            
+            <p>After your deposit is confirmed, the 50% bonus will be automatically added to your trading balance.</p>
+        </section>
+
+        <section class="steps-section">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <h3>Send Funds</h3>
+                <p>Send your cryptocurrency to the wallet address provided above. Make sure to send the correct amount.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Wait for Confirmation</h3>
+                <p>Wait for the transaction to be confirmed on the blockchain. This usually takes a few minutes.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3>Receive Bonus</h3>
+                <p>Once confirmed, your account will be created and the 50% bonus will be added to your trading balance.</p>
+            </div>
+        </section>
+
+        <section class="support-section">
+            <h2><i class="fas fa-headset"></i> Need Help?</h2>
+            <p>If you have any issues with your deposit or need assistance, our customer support team is available 24/7 on Telegram.</p>
+            <a href="https://t.me/CryptoEmperor5" class="telegram-btn" target="_blank">
+                <i class="fab fa-telegram"></i> Contact Support on Telegram
+            </a>
+        </section>
+
+        <footer>
+            <p>&copy; 2023 Padre Trade AI. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Copy wallet address functionality
+        document.getElementById('copyAddress').addEventListener('click', function() {
+            const address = '9PHnuwWcfBx9bCWvad78jRjK5oRyTxDBGB6USvVESXor';
+            navigator.clipboard.writeText(address).then(() => {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            });
+        });
+
+        // Add animation to step cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideUp 0.8s ease forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.step-card').forEach(card => {
+            card.style.opacity = '0';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
